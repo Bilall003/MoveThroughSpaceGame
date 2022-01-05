@@ -413,26 +413,24 @@ class MainWindow (QMainWindow):
 
 
     def show_msg(self, message):
+        self.res = False
+
         msg = QMessageBox()
         msg.setWindowTitle("Question")
         
         msg.setText(message)
         msg.setWindowIcon(QtGui.QIcon(":/icons/icons/triangle.svg"))
         msg.setStandardButtons(QMessageBox.Yes|QMessageBox.No)
-        answer = msg.buttonClicked.connect(self.check_ans)
+        msg.buttonClicked.connect(self.check_ans)
         msg.exec_()
-        return answer
+
+        return self.res
 
     def check_ans(self, i):
-        i = str(i)
-        i = i.lower()
-
-        if i == "yes":
-            return True
-        else:
-            return False
-
-    
+        ans = str(i.text())
+        
+        if ans == "&Yes":
+            self.res = True
 
 
 if __name__ == "__main__":
